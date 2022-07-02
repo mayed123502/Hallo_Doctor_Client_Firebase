@@ -15,9 +15,19 @@ import 'package:hallo_doctor_client/app/utils/localization.dart';
 import 'app/routes/app_pages.dart';
 import 'app/service/firebase_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app/utils/MyLocaleController.dart';
+
+late SharedPreferences shaedpref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  shaedpref = await SharedPreferences.getInstance();
+  print("*****************");
+  print(Get.deviceLocale!.languageCode);
+  print(shaedpref.getString("curruntLang"));
+  print("************************");
+
   await dotenv.load();
   await Firebase.initializeApp();
   NotificationService();
@@ -36,7 +46,10 @@ void main() async {
       localizationsDelegates: [
         FormBuilderLocalizations.delegate,
       ],
-      locale: LocalizationService.locale,
+      // LocalizationService.locale
+      locale: shaedpref.getString("curruntLang") == null
+          ? Get.deviceLocale
+          : Locale(shaedpref.getString("curruntLang")!),
       translations: LocalizationService(),
     ),
   );

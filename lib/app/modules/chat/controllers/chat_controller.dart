@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -118,7 +120,7 @@ class ChatController extends GetxController {
     final index = messages.indexWhere((element) => element.id == message.id);
     final updatedMessage = messages[index].copyWith(previewData: previewData);
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       messages[index] = updatedMessage;
     });
   }

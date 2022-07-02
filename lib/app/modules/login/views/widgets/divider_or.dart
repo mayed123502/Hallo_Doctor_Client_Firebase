@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DividerOr extends StatelessWidget {
   const DividerOr({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class DividerOr extends StatelessWidget {
               ),
             ),
           ),
-          Text('or'),
+          Text('or'.tr),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),

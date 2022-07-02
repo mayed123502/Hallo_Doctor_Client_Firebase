@@ -9,11 +9,60 @@ import 'package:hallo_doctor_client/app/modules/home/views/components/list_docto
 import 'package:hallo_doctor_client/app/service/doctor_service.dart';
 import 'package:hallo_doctor_client/app/utils/constants/style_constants.dart';
 
+import '../../../utils/MyLocaleController.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  final List locale = [
+    {'name': 'ENGLISH', 'locale': 'en'},
+    {'name': 'Arabic', 'locale': 'ar'},
+    {'name': 'French', 'locale': 'fr'},
+    {'name': 'Spanish', 'locale': 'es'},
+            {'name': 'Default', 'locale': 'def'},
+
+  ];
+  ChangeLanguageAlertDialog(BuildContext context) {
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {},
+    );
+    AlertDialog alert = AlertDialog(
+      title: const Text('Choose Your Language'),
+      content: Container(
+          width: double.maxFinite,
+          child: ListView.separated(
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    child: Text(locale[index]['name']),
+                    onTap: () {
+                      Get.find<MyLocaleController>()
+                          .changeLang(locale[index]['locale']);
+                    },
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return Divider(
+                  color: Colors.blue,
+                );
+              },
+              itemCount: locale.length)),
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    Get.put(MyLocaleController());
+
     final CarouselController caoruselController = CarouselController();
     return Scaffold(
       backgroundColor: mBackgroundColor,
@@ -57,9 +106,19 @@ class HomeView extends GetView<HomeController> {
                             Expanded(
                                 child: Container(
                               alignment: Alignment.centerRight,
-                              child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.notifications_none)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        ChangeLanguageAlertDialog(context);
+                                      },
+                                      icon: Icon(Icons.language)),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.notifications_none)),
+                                ],
+                              ),
                             ))
                           ],
                         ),

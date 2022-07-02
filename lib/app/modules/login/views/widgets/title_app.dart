@@ -20,14 +20,14 @@ class TitleApp extends StatelessWidget {
         RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-            text: 'Halo',
+            text: 'Agool',
             style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
                 color: Styles.secondaryBlueColor),
             children: [
               TextSpan(
-                text: ' Doctor',
+                text: ' App',
                 style: TextStyle(color: Colors.black, fontSize: 30),
               ),
             ],
